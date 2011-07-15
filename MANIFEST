@@ -1,0 +1,26 @@
+CHANGES
+inc/Module/Install.pm
+inc/Module/Install/Base.pm
+inc/Module/Install/Can.pm
+inc/Module/Install/Fetch.pm
+inc/Module/Install/Makefile.pm
+inc/Module/Install/Metadata.pm
+inc/Module/Install/Win32.pm
+inc/Module/Install/WriteAll.pm
+Makefile.PL
+MANIFEST			This list of files
+META.yml
+Object.pm
+README
+t/File-Object/00-use.t
+t/File-Object/01-version.t
+t/File-Object/02-pod_coverage.t
+t/File-Object/03-pod.t
+t/File-Object/04-new.t
+t/File-Object/05-dir.t
+t/File-Object/06-file.t
+t/File-Object/07-get_dir.t
+t/File-Object/08-get_file.t
+t/File-Object/09-reset.t
+t/File-Object/10-s.t
+t/File-Object/11-up.t
