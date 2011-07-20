@@ -11,7 +11,7 @@ use FindBin qw($Bin $Script);
 use File::Spec::Functions qw(catdir catfile splitdir);
 
 # Version.
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 
 # Constructor.
 sub new {
@@ -325,8 +325,12 @@ Constructor.
  print $obj->file('file2')->s."\n";
 
  # Output:
+ # Unix:
  # path/to/subdir/file1
  # path/to/subdir/file2
+ # Windows:
+ # path\to\subdir\file1
+ # path\to\subdir\file2
 
 =head1 EXAMPLE4
 
@@ -349,15 +353,19 @@ Constructor.
  print $obj->reset->dir('dir2')->s."\n";
 
  # Output:
+ # Unix:
  # path/to/subdir/dir1
  # path/to/subdir/dir2
+ # Windows:
+ # path\to\subdir\dir1
+ # path\to\subdir\dir2
 
 =head1 DEPENDENCIES
 
-L<Class::Utils(3pm)>,
-L<Error::Pure(3pm)>,
-L<FindBin(3pm)>,
-L<File::Spec::Functions(3pm)>.
+L<Class::Utils>,
+L<Error::Pure>,
+L<FindBin>,
+L<File::Spec::Functions>.
 
 =head1 REPOSITORY
 
@@ -375,6 +383,6 @@ BSD license.
 
 =head1 VERSION
 
-0.01
+0.02
 
 =cut

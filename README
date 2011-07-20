@@ -137,8 +137,7 @@ EXAMPLE4
      # path/to/subdir/dir2
 
 DEPENDENCIES
-    Class::Utils(3pm), Error::Pure(3pm), FindBin(3pm),
-    File::Spec::Functions(3pm).
+    Class::Utils, Error::Pure, FindBin, File::Spec::Functions.
 
 REPOSITORY
     <https://github.com/tupinek/File-Object>
@@ -152,5 +151,5 @@ LICENSE AND COPYRIGHT
     BSD license.
 
 VERSION
-    0.01
+    0.02
 
