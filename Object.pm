@@ -11,7 +11,7 @@ use FindBin qw($Bin $Script);
 use File::Spec::Functions qw(catdir catfile splitdir);
 
 # Version.
-our $VERSION = 0.02;
+our $VERSION = 0.03;
 
 # Constructor.
 sub new {
@@ -96,7 +96,7 @@ sub get_file {
 	}
 }
 
-# Reset.
+# Reset to constructor values.
 sub reset {
 	my $self = shift;
 	if ($self->{'type'} eq 'file') {
@@ -123,6 +123,19 @@ sub s {
 	} else {
 		return catfile(@{$self->{'path'}});
 	}
+}
+
+# Set actual values to constructor values.
+sub set {
+	my $self = shift;
+	my @path = @{$self->{'path'}};
+	if ($self->{'type'} eq 'file') {
+		$self->{'file'} = pop @path;
+		$self->{'dir'} = \@path;
+	} else {
+		$self->{'dir'} = \@path;
+	}
+	return $self;
 }
 
 # Go to parent directory.
@@ -204,6 +217,7 @@ File::Object - Object system for filesystem paths.
  my $file = $obj->get_file;
  $obj->reset;
  my $path = $obj->s;
+ $obj->set;
  $obj->up($num);
 
 =head1 METHODS
@@ -261,6 +275,10 @@ Constructor.
 =item C<s()>
 
  Serialize path and return.
+
+=item C<set()>
+
+ Set actual values to constructor values.
 
 =item C<up($up_num)>
 
@@ -383,6 +401,6 @@ BSD license.
 
 =head1 VERSION
 
-0.02
+0.03
 
 =cut
