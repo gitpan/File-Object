@@ -11,7 +11,7 @@ use FindBin qw($Bin $Script);
 use File::Spec::Functions qw(catdir catfile splitdir);
 
 # Version.
-our $VERSION = 0.03;
+our $VERSION = 0.04;
 
 # Constructor.
 sub new {
@@ -100,8 +100,13 @@ sub get_file {
 sub reset {
 	my $self = shift;
 	if ($self->{'type'} eq 'file') {
-		if ($self->{'file'}) {
-			$self->{'path'} = [@{$self->{'dir'}}, $self->{'file'}];
+		if (@{$self->{'dir'}}) {
+			$self->{'path'} = [@{$self->{'dir'}}];
+			if (defined $self->{'file'}) {
+				push @{$self->{'path'}}, $self->{'file'};
+			}
+		} elsif (defined $self->{'file'}) {
+			$self->{'path'} = [$self->{'file'}];
 		} else {
 			$self->{'path'} = [splitdir($Bin), $Script];
 		}
@@ -401,6 +406,6 @@ BSD license.
 
 =head1 VERSION
 
-0.03
+0.04
 
 =cut
