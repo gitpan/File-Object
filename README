@@ -66,6 +66,7 @@ ERRORS
      Mine:
              'dir' parameter must be a reference to array.
              Bad 'type' parameter.
+             Bad file constructor with undefined 'file' parameter.
              Cannot go up.
                      PATH -> path;
 
@@ -163,5 +164,5 @@ LICENSE AND COPYRIGHT
     BSD license.
 
 VERSION
-    0.04
+    0.05
 
