@@ -11,7 +11,7 @@ author 'Michal Špaček <skim@cpan.org>';
 license 'bsd';
 name 'File-Object';
 requires 'Class::Utils' => 0.03;
-requires 'Error::Pure' => 0.08;
+requires 'Error::Pure' => 0.11;
 requires 'File::Spec::Functions' => 0;
 requires 'FindBin' => 0;
 resources 'bugtracker' => 'https://rt.cpan.org/Public/Dist/Display.html'.
@@ -23,10 +23,11 @@ test_requires 'English' => 0;
 test_requires 'File::Spec::Functions' => 0;
 test_requires 'FindBin' => 0;
 test_requires 'Test::More' => 0;
+test_requires 'Test::NoWarnings' => 0;
 test_requires 'Test::Pod' => 0;
 test_requires 'Test::Pod::Coverage' => 0;
 tests_recursive;
-version '0.05';
+version '0.06';
 
 # Run.
 WriteAll();

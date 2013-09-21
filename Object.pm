@@ -7,11 +7,11 @@ use warnings;
 # Modules.
 use Class::Utils qw(set_params);
 use Error::Pure qw(err);
-use FindBin qw($Bin $Script);
 use File::Spec::Functions qw(catdir catfile splitdir);
+use FindBin qw($Bin $Script);
 
 # Version.
-our $VERSION = 0.05;
+our $VERSION = 0.06;
 
 # Constructor.
 sub new {
@@ -20,7 +20,7 @@ sub new {
 	# Create object.
 	my $self = bless {}, $class;
 
-	# Dir path.
+	# Directory path.
 	$self->{'dir'} = [];
 
 	# File path.
@@ -239,11 +239,13 @@ Constructor.
 
 =item * C<dir>
 
- Directory path.
+ Directory path in reference to array.
+ Default value is [].
 
 =item * C<file>
 
  File path.
+ Default value is undef.
 
 =item * C<type>
 
@@ -251,6 +253,7 @@ Constructor.
  Types:
  - file
  - dir
+ Default value is 'dir'.
 
 =back
 
@@ -296,15 +299,16 @@ Constructor.
 
 =head1 ERRORS
 
- Mine:
+ new():
          'dir' parameter must be a reference to array.
          Bad 'type' parameter.
          Bad file constructor with undefined 'file' parameter.
+         From Class::Utils::set_params():
+                 Unknown parameter '%s'.
+
+ up():
          Cannot go up.
                  PATH -> path;
-
- From Class::Utils::set_params():
-         Unknown parameter '%s'.
 
 =head1 EXAMPLE1
 
@@ -318,6 +322,9 @@ Constructor.
  # Print actual directory path.
  print File::Object->new->s."\n";
 
+ # Output which runs from /usr/local/bin:
+ # /usr/local/bin
+
 =head1 EXAMPLE2
 
  # Pragmas.
@@ -329,6 +336,9 @@ Constructor.
 
  # Print parent directory path.
  print File::Object->new->up->s."\n";
+
+ # Output which runs from /usr/local/bin:
+ # /usr/local
 
 =head1 EXAMPLE3
 
@@ -409,6 +419,6 @@ BSD license.
 
 =head1 VERSION
 
-0.05
+0.06
 
 =cut
