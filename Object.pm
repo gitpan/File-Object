@@ -11,7 +11,7 @@ use File::Spec::Functions qw(catdir catfile splitdir);
 use FindBin qw($Bin $Script);
 
 # Version.
-our $VERSION = 0.06;
+our $VERSION = 0.07;
 
 # Constructor.
 sub new {
@@ -33,7 +33,7 @@ sub new {
 	set_params($self, @params);
 
 	# Check to right 'type'.
-	if (! $self->{'type'} || ($self->{'type'} ne 'file' 
+	if (! $self->{'type'} || ($self->{'type'} ne 'file'
 		&& $self->{'type'} ne 'dir')) {
 
 		err 'Bad \'type\' parameter.';
@@ -99,7 +99,7 @@ sub get_file {
 	if ($self->{'type'} eq 'file') {
 		return $self->{'path'}->[-1];
 	} else {
-		return;	
+		return;
 	}
 }
 
@@ -179,7 +179,7 @@ sub up {
 
 # Add dir array.
 sub _dir {
-	my ($self, @dir) = @_;	
+	my ($self, @dir) = @_;
 	if ($self->{'type'} eq 'file') {
 		$self->{'type'} = 'dir';
 		$self->{'file'} = undef;
@@ -292,7 +292,7 @@ Constructor.
 
 =item C<up($up_num)>
 
- Go to $up_num upper directory. 
+ Go to $up_num upper directory.
  Returns main object.
 
 =back
@@ -419,6 +419,6 @@ BSD license.
 
 =head1 VERSION
 
-0.06
+0.07
 
 =cut
