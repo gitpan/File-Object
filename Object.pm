@@ -11,7 +11,7 @@ use File::Spec::Functions qw(catdir catfile splitdir);
 use FindBin qw($Bin $Script);
 
 # Version.
-our $VERSION = 0.07;
+our $VERSION = 0.08;
 
 # Constructor.
 sub new {
@@ -51,8 +51,17 @@ sub new {
 		err 'Bad file constructor with undefined \'file\' parameter.';
 	}
 
-	# Reset to constructor values.
-	$self->reset;
+	# Remove undef dirs.
+	if (@{$self->{'dir'}}) {
+		my @dir = map { defined $_ ? $_ : () } @{$self->{'dir'}};
+		$self->{'dir'} = \@dir;
+	}
+
+	# Update path.
+	$self->_update_path;
+
+	# Set values.
+	$self->set;
 
 	# Object.
 	return $self;
@@ -77,8 +86,6 @@ sub file {
 	my $file = pop @dirs_or_file;
 	$self->dir(@dirs_or_file);
 	$self->_file($file);
-
-	# Object.
 	return $self;
 }
 
@@ -106,19 +113,15 @@ sub get_file {
 # Reset to constructor values.
 sub reset {
 	my $self = shift;
-	if ($self->{'type'} eq 'file') {
-		if ($self->{'file'}) {
-			$self->{'path'} = [@{$self->{'dir'}}, $self->{'file'}];
-		} else {
-			$self->{'path'} = [splitdir($Bin), $Script];
-		}
-	} else {
-		if (@{$self->{'dir'}}) {
-			$self->{'path'} = [@{$self->{'dir'}}];
-		} else {
-			$self->{'path'} = [splitdir($Bin)];
-		}
-	}
+
+	# Reset to setted values.
+	$self->{'dir'} = $self->{'_set'}->{'dir'};
+	$self->{'file'} = $self->{'_set'}->{'file'};
+	$self->{'type'} = $self->{'_set'}->{'type'};
+
+	# Update path.
+	$self->_update_path;
+
 	return $self;
 }
 
@@ -136,11 +139,12 @@ sub s {
 sub set {
 	my $self = shift;
 	my @path = @{$self->{'path'}};
+	$self->{'_set'}->{'type'} = $self->{'type'};
 	if ($self->{'type'} eq 'file') {
-		$self->{'file'} = pop @path;
-		$self->{'dir'} = \@path;
+		$self->{'_set'}->{'file'} = pop @path;
+		$self->{'_set'}->{'dir'} = \@path;
 	} else {
-		$self->{'dir'} = \@path;
+		$self->{'_set'}->{'dir'} = \@path;
 	}
 	return $self;
 }
@@ -192,12 +196,35 @@ sub _dir {
 # Add file array.
 sub _file {
 	my ($self, $file) = @_;
+	if (! defined $file) {
+		return;
+	}
 	if ($self->{'type'} eq 'file') {
 		pop @{$self->{'path'}};
 		push @{$self->{'path'}}, $file;
 	} else {
 		push @{$self->{'path'}}, $file;
 		$self->{'type'} = 'file';
+	}
+	return;
+}
+
+# Update path.
+sub _update_path {
+	my $self = shift;
+	if ($self->{'type'} eq 'file') {
+		$self->{'path'} = [
+			@{$self->{'dir'}},
+			defined $self->{'file'} ? $self->{'file'} : (),
+		];
+		if (! @{$self->{'path'}}) {
+			$self->{'path'} = [splitdir($Bin), $Script];
+		}
+	} else {
+		$self->{'path'} = [@{$self->{'dir'}}];
+		if (! @{$self->{'path'}}) {
+			$self->{'path'} = [splitdir($Bin)];
+		}
 	}
 	return;
 }
@@ -419,6 +446,6 @@ BSD license.
 
 =head1 VERSION
 
-0.07
+0.08
 
 =cut
